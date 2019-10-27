@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <title>Cal Dining</title>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,800' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
+</head>
+<body>
+
+  <p>Cal Dining</p>
+  <table>
+      <h2>Select a dining hall, or press the HeyOski button and say it!:</h2>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="cafe" type="submit" value="Café 3" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="clark" type="submit" value="Clark Kerr" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="cr" type="submit" value="Crossroads" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="foot" type="submit" value="Foothill" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="gbc" type="submit" value="Campus Restaurants" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_data') }}" method="post">
+        <input id="den" type="submit" value="Convenience Stores" name = "projectFilepath">
+      </form>
+      <form action="{{ url_for('handle_voice') }}" method="post">
+        <input id="oski" type="submit" value="HeyOski" name = "_projectFilepath">
+      </form>
+  </table>
+  <h2>Hours for {{place}}</h2>
+  <table>
+    <tbody>
+      {% for time in times %}
+        <tr>
+            <td>{{ time }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+</html>
