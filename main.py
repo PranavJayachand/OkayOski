@@ -23,16 +23,18 @@ from bs4 import BeautifulSoup
 from datetime import date
 from flask import Flask, render_template, request
 import threading
-
 import re
 import sys
-
+from caldiningmenu import Cal_Dining_Webscraper
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
-from google.cloud import texttospeech
+
+dining = Cal_Dining_Webscraper('MENU')
+menus = dining.get_text()
+sched = dining.change_mode('SCHEDULE', u'Crossroads').get_text()
 
 import jinja2
 ListeningRN = "Crossroads"
@@ -238,7 +240,7 @@ def handle_voice():
     global ListeningRN
     dplace = request.form['_projectFilepath']
     if dplace:
-            return render_template('index.html', times=get_cal_dining_schedule(ListeningRN,link),place=ListeningRN)
+            return render_template('index.html', times=dining.change_mode('SCHEDULE', dplace).get_text(), menu = dining.change_mode('MENU', dplace).get_text(), place=ListeningRN)
 
 @app.route('/handle_data', methods=['POST'])
 def handle_data(iplace=0):
@@ -246,7 +248,7 @@ def handle_data(iplace=0):
         iplace = request.form['projectFilepath']
     # your code
     # return a response
-    return render_template('index.html', times=get_cal_dining_schedule(iplace, link), place = iplace)
+    return render_template('index.html', times=dining.change_mode('SCHEDULE', iplace).get_text(), menu = dining.change_mode('MENU', iplace).get_text(), place = iplace)
 
 
 
@@ -283,7 +285,7 @@ def root():
                    datetime.datetime(2018, 1, 3, 11, 0, 0),
                    ]
 
-    return render_template('index.html', times=get_cal_dining_schedule(dining_loc, link), place = dining_loc)
+    return render_template('index.html', times=dining.change_mode('SCHEDULE', u'Crossroads').get_text(), menu = dining.change_mode('MENU', u'Crossroads').get_text(), place = dining_loc)
 
 
 if __name__ == '__main__':

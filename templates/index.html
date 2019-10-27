@@ -4,7 +4,7 @@
   <title>Cal Dining</title>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,800' rel='stylesheet' type='text/css'>
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}" />
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
 
@@ -39,6 +39,11 @@
       {% for time in times %}
         <tr>
             <td>{{ time }}</td>
+        </tr>
+      {% endfor %}
+      {% for each in menu %}
+        <tr>
+          <td>{{ each }}</td>
         </tr>
       {% endfor %}
     </tbody>
